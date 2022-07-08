@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "dialpad" {
-  token = "My-Api-Key"
+  api_key = "My-Api-Key"
 }
 
 resource "dialpad_webhook" "example" {

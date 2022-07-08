@@ -56,7 +56,7 @@ func resourceWebhookRead(ctx context.Context, d *schema.ResourceData, m interfac
 	var diags diag.Diagnostics
 
 	hookId := d.Id()
-	client := m.(*Client)
+	client := m.(*client)
 
 	req, err := client.NewRequest("GET", fmt.Sprintf("/webhooks/%s", hookId), nil)
 
@@ -84,7 +84,7 @@ func resourceWebhookRead(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceWebhookCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*Client)
+	client := m.(*client)
 
 	hookRequest := webhookRequest{
 		HookUrl: d.Get("hook_url").(string),
@@ -123,7 +123,7 @@ func resourceWebhookCreate(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceWebhookUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*Client)
+	client := m.(*client)
 	id := d.Id()
 
 	hookRequest := webhookRequest{
@@ -155,7 +155,7 @@ func resourceWebhookUpdate(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceWebhookDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	client := m.(*Client)
+	client := m.(*client)
 
 	id := d.Id()
 
