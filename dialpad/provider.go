@@ -11,10 +11,11 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"token": {
-				Type:      schema.TypeString,
-				Required:  true,
-				Sensitive: true,
+			"api_key": {
+				Type:        schema.TypeString,
+				DefaultFunc: schema.EnvDefaultFunc("DIALPAD_API_KEY", nil),
+				Required:    true,
+				Sensitive:   true,
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
@@ -29,8 +30,8 @@ func Provider() *schema.Provider {
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
-	token := d.Get("token").(string)
-	client := NewClient(token)
+	apiKey := d.Get("api_key").(string)
+	client := NewClient(apiKey)
 
 	return client, diags
 }

@@ -15,4 +15,4 @@
 # vendor/
 
 # Terraform example directory
-.terraform
+.terraform*

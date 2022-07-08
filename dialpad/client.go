@@ -8,35 +8,35 @@ import (
 	"net/http"
 )
 
-type DialpadError struct {
+type dialpadError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
-type DialpadErrorWrapper struct {
-	Error DialpadError `json:"error"`
+type dialpadErrorWrapper struct {
+	Error dialpadError `json:"error"`
 }
 
-type Client struct {
+type client struct {
 	HttpClient *http.Client
-	Token      string
+	ApiKey     string
 }
 
-func NewClient(token string) *Client {
-	client := Client{
+func NewClient(apiKey string) *client {
+	client := client{
 		HttpClient: &http.Client{},
-		Token:      token,
+		ApiKey:     apiKey,
 	}
 
 	return &client
 }
 
-func (c *Client) NewRequest(method string, path string, body io.Reader) (*http.Request, error) {
+func (c *client) NewRequest(method string, path string, body io.Reader) (*http.Request, error) {
 	return http.NewRequest(method, fmt.Sprintf("https://dialpad.com/api/v2%s", path), body)
 }
 
-func (c *Client) Do(req *http.Request) ([]byte, error) {
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.Token))
+func (c *client) Do(req *http.Request) ([]byte, error) {
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.ApiKey))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
 
@@ -53,7 +53,7 @@ func (c *Client) Do(req *http.Request) ([]byte, error) {
 	}
 
 	if res.StatusCode >= 400 {
-		dialpadError := &DialpadErrorWrapper{}
+		dialpadError := &dialpadErrorWrapper{}
 
 		err = json.Unmarshal(body, &dialpadError)
 		if err != nil {

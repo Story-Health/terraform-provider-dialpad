@@ -50,7 +50,7 @@ func resourceCallSubscriptionRead(ctx context.Context, d *schema.ResourceData, m
 	var diags diag.Diagnostics
 
 	subId := d.Id()
-	client := m.(*Client)
+	client := m.(*client)
 
 	req, err := client.NewRequest("GET", fmt.Sprintf("/subscriptions/call/%s", subId), nil)
 
@@ -78,7 +78,7 @@ func resourceCallSubscriptionRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceCallSubscriptionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*Client)
+	client := m.(*client)
 
 	statesSet := d.Get("call_states").(*schema.Set).List()
 	states := make([]string, len(statesSet))
@@ -119,7 +119,7 @@ func resourceCallSubscriptionCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceCallSubscriptionUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*Client)
+	client := m.(*client)
 	id := d.Id()
 
 	statesSet := d.Get("call_states").(*schema.Set).List()
@@ -153,7 +153,7 @@ func resourceCallSubscriptionUpdate(ctx context.Context, d *schema.ResourceData,
 
 func resourceCallSubscriptionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	client := m.(*Client)
+	client := m.(*client)
 
 	id := d.Id()
 
