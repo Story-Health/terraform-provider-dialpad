@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     dialpad = {
-      version = "0.1"
-      source  = "StoryHealth/dialpad"
+      version = "0.1.0"
+      source  = "Story-Health/dialpad"
     }
   }
 }
